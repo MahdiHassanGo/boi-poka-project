@@ -1,12 +1,34 @@
+import React, { useEffect, useState } from 'react';
+import Book from '../Book/Book';
 
-import parseRgbLegacy from './../../../node_modules/culori/src/rgb/parseRgbLegacy';
+const Books = () => {
 
-const Home = () => {
+    const [books, setBooks] = useState([]);
+
+    useEffect(() => {
+        fetch('./booksData.json')
+            .then(res => res.json())
+            .then(data => setBooks(data))
+    }, []);
+
     return (
         <div>
-            <h2>Home page </h2>
+            <h2 className="text-4xl font-bold text-center">Books</h2>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+                {
+                    books.map(book => <Book book={book} key={book.bookId}></Book>)
+                }
+            </div>
         </div>
     );
 };
 
-export default Home;
+export default Books;
+
+/**
+ * 1. state to store books
+ * 2. useEffect
+ * 3. fetch to load data
+ * 4. set the date to the books state
+ * 
+*/
